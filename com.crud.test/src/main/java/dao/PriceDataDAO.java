@@ -36,6 +36,14 @@ public class PriceDataDAO {
         session.close();
     }
 
+    public void deleteAll() {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.createQuery("DELETE FROM model.PriceData").executeUpdate();
+        session.getTransaction().commit();
+        session.close();
+    }
+
     public List<PriceData> findAll() {
         List<PriceData> priceDataList = (List<PriceData>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From model.PriceData").list();
         return priceDataList;

@@ -2,7 +2,9 @@ package service;
 
 import dao.PriceDataDAO;
 import model.PriceData;
+import readExcel.ReadExcel;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ServicePriceData {
@@ -23,11 +25,20 @@ public class ServicePriceData {
         priceDataDAO.delete(priceData);
     }
 
+    public void deleteAllPriceData() {
+        priceDataDAO.deleteAll();
+    }
+
     public void updatePriceData(PriceData priceData) {
         priceDataDAO.update(priceData);
     }
 
     public List<PriceData> findAllProducts() {
         return priceDataDAO.findAll();
+    }
+
+    public void addAllProductsFromPrice () throws IOException {
+        ReadExcel readExel = new ReadExcel();
+        readExel.getProducts();
     }
 }

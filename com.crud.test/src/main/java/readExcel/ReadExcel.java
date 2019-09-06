@@ -37,7 +37,7 @@ public class ReadExcel {
 
         Iterator<Row> rows = sheet.rowIterator(); // Перебираем все строки
 
-        // Пропускаем "шапку" таблицы
+        // Пропускаем "шапку" таблицы, первые 18 строк
 
             if (rows.hasNext()) {
                 for (int i = 0; i < 18; i++) {
@@ -54,29 +54,29 @@ public class ReadExcel {
             HSSFCell codeCell = row.getCell(CODE_OF_PRODUCT); //код
             HSSFCell nameCell = row.getCell(NAME_OF_PRODUCT); //наименование
             HSSFCell priceCell = row.getCell(PRICE_OF_PRODUCT,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK); //цена
-            // Если в первом столбце нет данных, то контакт не создаём
 
+            // Если в первом столбце нет данных, то контакт не создаём
             if (codeCell != null) {
                 PriceData priceData = new PriceData();
 
                 if (codeCell.getCellType()==NUMERIC) {
 
                     priceData.setCode(String.valueOf(codeCell.getNumericCellValue())); //Получаем числовое значение из ячейки
-                    //priceData.setCode(""); //Адрес может не быть задан
+
 
                 }
 
                 if (codeCell.getCellType()==STRING) {
 
-                    priceData.setCode(codeCell.getStringCellValue()); //Получаем строковое значение из ячейки
-                    priceData.setCode(""); //Адрес может не быть задан
+                    priceData.setCode(codeCell.getStringCellValue());
+                    priceData.setCode("");
 
                 }
 
                 if (nameCell.getCellType()== NUMERIC) {
 
                     if (nameCell != null && !"".equals(nameCell.getNumericCellValue())) {
-                        priceData.setName(String.valueOf(nameCell.getNumericCellValue())); //Адрес - строка
+                        priceData.setName(String.valueOf(nameCell.getNumericCellValue()));
                         priceData.setName("");
                     }
 
@@ -85,11 +85,9 @@ public class ReadExcel {
                 if (nameCell.getCellType()==STRING) {
 
                     if (nameCell != null && !"".equals(nameCell.getStringCellValue())) {
-                        priceData.setName(nameCell.getStringCellValue()); //Адрес - строка
-                        //priceData.setName("");
-                    }
+                        priceData.setName(nameCell.getStringCellValue());
 
-                    //priceData.setName(""); //Телефон тоже может не быть задан
+                    }
 
                 }
 
@@ -102,8 +100,7 @@ public class ReadExcel {
                 if (priceCell.getCellType()==NUMERIC && priceCell != null) {
 
                     if (priceCell != null && !"".equals(priceCell.getNumericCellValue())) {
-                        priceData.setPrice(priceCell.getNumericCellValue()); // Телефон - тоже строка
-                        //priceData.setPrice(0);
+                        priceData.setPrice(priceCell.getNumericCellValue());
                     }
 
                 }
@@ -127,11 +124,9 @@ public class ReadExcel {
                 if (priceCell.getCellType()==STRING) {
 
                     if (priceCell != null && !"".equals(priceCell.getNumericCellValue())) {
-                        priceData.setPrice(Double.parseDouble(priceCell.getStringCellValue())); // Телефон - тоже строка
-                        //priceData.setPrice(0);
-                    }
+                        priceData.setPrice(Double.parseDouble(priceCell.getStringCellValue()));
 
-                    //priceData.setName(""); //Телефон тоже может не быть задан
+                    }
 
                 }
 
