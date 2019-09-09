@@ -31,13 +31,13 @@ public class Main {
 
 
         //перезаписать из прайса в базу всё
-//        ServicePriceData servicePriceData = new ServicePriceData();
-//        servicePriceData.deleteAllPriceData();
-//        servicePriceData.addAllProductsFromPrice();
+        ServicePriceData servicePriceData = new ServicePriceData();
+        servicePriceData.deleteAllPriceData();
+        servicePriceData.addAllProductsFromPrice();
 
         //показать всю базу
-        ServicePriceData servicePriceData1 = new ServicePriceData();
-        System.out.println(servicePriceData1.findAllProducts());
+//        ServicePriceData servicePriceData1 = new ServicePriceData();
+//        System.out.println(servicePriceData1.findAllProducts());
 
     }
 }
