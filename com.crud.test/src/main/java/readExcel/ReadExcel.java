@@ -20,14 +20,14 @@ import static org.apache.poi.ss.usermodel.CellType.*;
 
 public class ReadExcel {
 
-    public static final int CODE_OF_PRODUCT = 1; //код
-    public static final int NAME_OF_PRODUCT = 2; //наименование
-    public static final int PRICE_OF_PRODUCT = 3; //цена
-    ServicePriceData servicePriceData = new ServicePriceData();
-    PriceData priceData;
+    private static final int CODE_OF_PRODUCT = 1; //код
+    private static final int NAME_OF_PRODUCT = 2; //наименование
+    private static final int PRICE_OF_PRODUCT = 3; //цена
+    private ServicePriceData servicePriceData = new ServicePriceData();
+    private PriceData priceData;
 
     public List<PriceData> getProducts() throws IOException {
-        List<PriceData> productsList = new ArrayList<PriceData>(); //Создаём пустой список
+        List<PriceData> productsList = new ArrayList(); //Создаём пустой список
 
         URL url = new URL("https://www.ideal-tools.ru/files/price.xls");
         InputStream inputStream = url.openStream();
@@ -68,7 +68,7 @@ public class ReadExcel {
                 }
 
                 //Наименование
-                if (nameCell != null && nameCell.getCellType() == NUMERIC) {
+                if (nameCell.getCellType() == NUMERIC) {
                     priceData.setName(String.valueOf(nameCell.getNumericCellValue()));
                 } else if (nameCell.getCellType() == STRING) {
                     priceData.setName(nameCell.getStringCellValue());
