@@ -6,9 +6,6 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import service.ServicePriceData;
 
@@ -26,12 +23,15 @@ public class ReadExcel {
     public static final int CODE_OF_PRODUCT = 1; //код
     public static final int NAME_OF_PRODUCT = 2; //наименование
     public static final int PRICE_OF_PRODUCT = 3; //цена
+    ServicePriceData servicePriceData = new ServicePriceData();
+    PriceData priceData;
+
     public List<PriceData> getProducts() throws IOException {
         List<PriceData> productsList = new ArrayList<PriceData>(); //Создаём пустой список
 
         URL url = new URL("https://www.ideal-tools.ru/files/price.xls");
         InputStream inputStream = url.openStream();
-        POIFSFileSystem fileSystem =   new POIFSFileSystem(inputStream); //Открываем документ
+        POIFSFileSystem fileSystem = new POIFSFileSystem(inputStream); //Открываем документ
         HSSFWorkbook workBook = new HSSFWorkbook(fileSystem); // Получаем workbook
         HSSFSheet sheet = workBook.getSheetAt(0); // Проверяем только первую страницу
 
@@ -39,103 +39,65 @@ public class ReadExcel {
 
         // Пропускаем "шапку" таблицы, первые 18 строк
 
-            if (rows.hasNext()) {
-                for (int i = 0; i < 18; i++) {
-                    rows.next();
-                }
+        if (rows.hasNext()) {
+            for (int i = 0; i < 18; i++) {
+                rows.next();
             }
-
-
+        }
 
         // Перебираем все строки начиная со второй до тех пор, пока документ не закончится
-        while (rows.hasNext()==true) {
+        while (rows.hasNext() == true) {
             HSSFRow row = (HSSFRow) rows.next();
             //Получаем ячейки из строки по номерам столбцов
             HSSFCell codeCell = row.getCell(CODE_OF_PRODUCT); //код
-            HSSFCell nameCell = row.getCell(NAME_OF_PRODUCT); //наименование
-            HSSFCell priceCell = row.getCell(PRICE_OF_PRODUCT,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK); //цена
+            HSSFCell nameCell = row.getCell(NAME_OF_PRODUCT, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK); //наименование
+            HSSFCell priceCell = row.getCell(PRICE_OF_PRODUCT, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK); //цена
 
-            // Если в первом столбце нет данных, то контакт не создаём
+            // Если в первом столбце нет данных, то товар не создаём
             if (codeCell != null) {
-                PriceData priceData = new PriceData();
+                priceData = new PriceData();
 
-                if (codeCell.getCellType()==NUMERIC) {
-
+                //код товара
+                if (codeCell.getCellType() == NUMERIC) {
                     priceData.setCode(String.valueOf(codeCell.getNumericCellValue())); //Получаем числовое значение из ячейки
-
-
                 }
 
-                if (codeCell.getCellType()==STRING) {
-
+                if (codeCell.getCellType() == STRING) {
                     priceData.setCode(codeCell.getStringCellValue());
-                    priceData.setCode("");
 
                 }
 
-                if (nameCell.getCellType()== NUMERIC) {
+                //Наименование
+                if (nameCell != null && nameCell.getCellType() == NUMERIC) {
+                    priceData.setName(String.valueOf(nameCell.getNumericCellValue()));
+                } else if (nameCell.getCellType() == STRING) {
+                    priceData.setName(nameCell.getStringCellValue());
 
-                    if (nameCell != null && !"".equals(nameCell.getNumericCellValue())) {
-                        priceData.setName(String.valueOf(nameCell.getNumericCellValue()));
-                        priceData.setName("");
-                    }
+                } else if (nameCell.getCellType() == BLANK) {
+                    priceData.setName("BLANK");
 
+                } else if (nameCell.getCellType() == ERROR) {
+                    priceData.setName("ERROR");
                 }
 
-                if (nameCell.getCellType()==STRING) {
+                //Цена
+                if (priceCell.getCellType() == NUMERIC) {
+                    priceData.setPrice(priceCell.getNumericCellValue());
 
-                    if (nameCell != null && !"".equals(nameCell.getStringCellValue())) {
-                        priceData.setName(nameCell.getStringCellValue());
+                } else if (priceCell.getCellType() == STRING) {
+                    priceData.setPrice(Double.parseDouble(priceCell.getStringCellValue()));
+                } else if (priceCell.getCellType() == BLANK) {
+                    priceData.setPrice(0);
 
-                    }
-
-                }
-
-
-                if ((priceCell.getCellType()==NUMERIC)&& priceCell.equals(null)) {
-                        priceData.setPrice(0);
-
-                }
-
-                if (priceCell.getCellType()==NUMERIC && priceCell != null) {
-
-                    if (priceCell != null && !"".equals(priceCell.getNumericCellValue())) {
-                        priceData.setPrice(priceCell.getNumericCellValue());
-                    }
-
-                }
-
-                if (priceCell.getCellType()==NUMERIC && priceCell == null) {
+                } else if (priceCell.getCellType() == ERROR) {
                     priceData.setPrice(0);
                 }
 
-                if (priceCell.getCellType()==BLANK) {
-
-                    priceData.setPrice(0);
-
-                }
-
-                if (priceCell.getCellType()==ERROR) {
-
-                    priceData.setPrice(0);
-
-                }
-
-                if (priceCell.getCellType()==STRING) {
-
-                    if (priceCell != null && !"".equals(priceCell.getNumericCellValue())) {
-                        priceData.setPrice(Double.parseDouble(priceCell.getStringCellValue()));
-
-                    }
-
-                }
 
                 productsList.add(priceData); //Добавляем товар в список
-                ServicePriceData servicePriceData = new ServicePriceData();
                 servicePriceData.savePriceData(priceData);
-
             }
         }
         return productsList;
-
-}}
+    }
+}
