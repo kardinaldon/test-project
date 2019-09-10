@@ -1,22 +1,28 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "price_data")
 public class PriceData {
 
+    @JsonProperty("id")
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="id")
     private int id;
 
+    @JsonProperty("code")
     @Column(name="code")
     private String code;
 
+    @JsonProperty("name")
     @Column(name="name")
     private String name;
 
+    @JsonProperty("price")
     @Column(name="price")
     private double price;
 

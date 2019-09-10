@@ -1,6 +1,6 @@
 package dao;
 
-import Utils.HibernateSessionFactoryUtil;
+import utils.HibernateSessionFactoryUtil;
 import model.PriceData;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
