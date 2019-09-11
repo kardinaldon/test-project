@@ -2,7 +2,7 @@ package service;
 
 import dao.PriceDataDAO;
 import model.PriceData;
-import readExcel.ReadExcel;
+import utils.readExcel.ReadExcel;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,7 +13,7 @@ public class ServicePriceData {
     public ServicePriceData() {
     }
 
-    public PriceData findPriceData(int id) {
+    public PriceData findPriceDataFromId(int id) {
         return priceDataDAO.findById(id);
     }
 

@@ -1,4 +1,4 @@
-package writeJsonFromDB;
+package utils.writeJsonFromDB;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.PriceData;

@@ -1,4 +1,4 @@
-package readExcel;
+package utils.readExcel;
 
 import model.PriceData;
 import org.apache.poi.hssf.usermodel.HSSFCell;

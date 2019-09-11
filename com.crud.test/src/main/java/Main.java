@@ -1,7 +1,6 @@
 import model.PriceData;
-import readExcel.ReadExcel;
 import service.ServicePriceData;
-import writeJsonFromDB.WriteJsonFromDB;
+import utils.writeJsonFromDB.WriteJsonFromDB;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,10 +16,9 @@ public class Main {
 //        servicePriceData.addAllProductsFromPrice();
 
         //создать Json из БД
-        servicePriceData = new ServicePriceData();
-        List<PriceData> priceDataList = servicePriceData.findAllProducts();
-        WriteJsonFromDB.toJSON(priceDataList);
-
+//        servicePriceData = new ServicePriceData();
+//        List<PriceData> priceDataList = servicePriceData.findAllProducts();
+//        WriteJsonFromDB.toJSON(priceDataList);
 
     }
 }

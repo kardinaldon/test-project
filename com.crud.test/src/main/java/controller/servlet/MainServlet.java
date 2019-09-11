@@ -48,7 +48,7 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
-        PriceData priceData = servicePriceData.findPriceData(id);
+        PriceData priceData = servicePriceData.findPriceDataFromId(id);
         priceData.setCode(req.getParameter("code"));
         priceData.setName(req.getParameter("name"));
         priceData.setPrice(Double.parseDouble(req.getParameter("price")));
@@ -59,7 +59,7 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
-        servicePriceData.deletePriceData(servicePriceData.findPriceData(id));
+        servicePriceData.deletePriceData(servicePriceData.findPriceDataFromId(id));
         resp.sendRedirect("http://localhost:8080/com_crud_test_1_0_SNAPSHOT_war/pricedata");
     }
 }

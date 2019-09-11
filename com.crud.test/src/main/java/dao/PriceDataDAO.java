@@ -1,5 +1,7 @@
 package dao;
 
+import org.hibernate.TypeHelper;
+import org.hibernate.boot.model.source.spi.HibernateTypeSource;
 import utils.HibernateSessionFactoryUtil;
 import model.PriceData;
 import org.hibernate.Session;
@@ -11,6 +13,7 @@ public class PriceDataDAO {
     public PriceData findById(int id) {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(PriceData.class, id);
     }
+
 
     public void save(PriceData priceData) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
