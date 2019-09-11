@@ -2,7 +2,6 @@ package writeJsonFromDB;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.PriceData;
-import service.ServicePriceData;
 
 import java.io.File;
 import java.io.IOException;

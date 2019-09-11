@@ -30,7 +30,7 @@ public class MainServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<PriceData> priceDataList = servicePriceData.findAllProducts();
         req.setAttribute("priceDataList",priceDataList);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/showproducts.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("showproducts.jsp");
         requestDispatcher.forward(req,resp);
 
     }
