@@ -37,8 +37,16 @@ public class ServicePriceData {
         return priceDataDAO.findAll();
     }
 
-    public void addAllProductsFromPrice () throws IOException {
+    public void addAllProductsInPriceFromExcel() throws IOException {
         ReadExcel readExel = new ReadExcel();
         readExel.getProducts();
     }
+
+    public void addAllProductsInPriceFromRestJson(List<PriceData> priceDataList) throws IOException {
+        for (PriceData priceData: priceDataList) {
+            PriceDataDAO priceDataDAO = new PriceDataDAO();
+            priceDataDAO.save(priceData);
+        }
+    }
+
 }

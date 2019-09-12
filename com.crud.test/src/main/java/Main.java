@@ -6,14 +6,15 @@ import java.io.IOException;
 import java.util.List;
 
 public class Main {
+
     public static void main(String[] args) throws IOException {
 
         ServicePriceData servicePriceData;
 
-        //перезаписать из прайса в базу всё
-//        ServicePriceData servicePriceData = new ServicePriceData();
+        //перезаписать из прайса в базу всё Apache POI
+//        servicePriceData = new ServicePriceData();
 //        servicePriceData.deleteAllPriceData();
-//        servicePriceData.addAllProductsFromPrice();
+//        servicePriceData.addAllProductsInPriceFromExcel();
 
         //создать Json из БД
 //        servicePriceData = new ServicePriceData();

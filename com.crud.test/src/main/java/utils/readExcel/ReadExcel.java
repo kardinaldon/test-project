@@ -54,7 +54,7 @@ public class ReadExcel {
             HSSFCell priceCell = row.getCell(PRICE_OF_PRODUCT, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK); //цена
 
             // Если в первом столбце нет данных, то товар не создаём
-            if (codeCell != null) {
+            if (codeCell != null && codeCell.getCellType() != BLANK && codeCell.getCellType() != ERROR) {
                 priceData = new PriceData();
 
                 //код товара
